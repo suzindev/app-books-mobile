@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="Base.Theme.NYBooks" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="Theme.NYBooks" parent="Base.Theme.NYBooks" />
+</resources>
