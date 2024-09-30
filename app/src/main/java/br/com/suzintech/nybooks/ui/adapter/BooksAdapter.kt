@@ -9,23 +9,29 @@ import br.com.suzintech.nybooks.R
 import br.com.suzintech.nybooks.data.model.Book
 
 class BooksAdapter(
-    private val lista: List<Book>
+    private val lista: List<Book>,
+    private val onItemClickListener: ((book: Book) -> Unit)
 ) : RecyclerView.Adapter<BooksAdapter.BooksViewHolder>() {
 
-    class BooksViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class BooksViewHolder(itemView: View, private val onItemClickListener: ((book: Book) -> Unit)) :
+        RecyclerView.ViewHolder(itemView) {
         private val title = itemView.findViewById<TextView>(R.id.item_book_textTitle)
         private val author = itemView.findViewById<TextView>(R.id.item_book_textAuthor)
 
         fun bindView(book: Book) {
             title.text = book.title
             author.text = book.author
+
+            itemView.setOnClickListener {
+                onItemClickListener.invoke(book)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BooksViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false)
 
-        return BooksViewHolder(view)
+        return BooksViewHolder(view, onItemClickListener)
     }
 
     override fun getItemCount() = lista.count()
