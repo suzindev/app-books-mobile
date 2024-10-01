@@ -1,5 +1,6 @@
 package br.com.suzintech.nybooks.data.response
 
+import br.com.suzintech.nybooks.data.model.Book
 import com.google.gson.annotations.SerializedName
 
 data class BooksDetailsResponse(
@@ -11,4 +12,10 @@ data class BooksDetailsResponse(
 
     @SerializedName("description")
     val description: String
-)
+) {
+    fun getBookModel() = Book(
+        title = this.title,
+        author = this.author,
+        description = this.description
+    )
+}

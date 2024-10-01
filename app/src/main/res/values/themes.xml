@@ -1,8 +1,17 @@
 <resources>
 
     <style name="Base.Theme.NYBooks" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textViewStyle">@style/TextView</item>
     </style>
 
     <style name="Theme.NYBooks" parent="Base.Theme.NYBooks" />
+
+    <style name="TextView">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="TextViewLabel">
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

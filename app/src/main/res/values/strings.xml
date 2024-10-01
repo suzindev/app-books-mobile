@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NYBooks</string>
+
+    <string name="error_401">Não Autorizado</string>
+    <string name="error_400_generic">Erro não Tratado</string>
+    <string name="error_500_generic">Erro Catastrófico</string>
 </resources>

@@ -1,16 +1,15 @@
 package br.com.suzintech.nybooks.ui
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.suzintech.nybooks.R
+import br.com.suzintech.nybooks.data.repository.BooksApiDataSource
 import br.com.suzintech.nybooks.databinding.ActivityMainBinding
 import br.com.suzintech.nybooks.ui.adapter.BooksAdapter
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -19,10 +18,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.toolbar.title = getString(R.string.app_name)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setupToolbar(R.string.app_name)
 
-        val viewModel: BooksViewModel = ViewModelProvider(this)[BooksViewModel::class.java]
+        val viewModel: BooksViewModel = BooksViewModel.ViewModelFactory(BooksApiDataSource())
+            .create(BooksViewModel::class.java)
+
         viewModel.booksLiveData.observe(this, Observer {
             it?.let { books ->
                 with(binding.listBooks) {
@@ -42,6 +42,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        viewModel.viewFlipperLiveData.observe(this, Observer {
+            it?.let { viewFlipper ->
+                binding.listViewFlipper.displayedChild = viewFlipper.first
+                viewFlipper.second?.let { errorMessage ->
+                    binding.listError.text = getString(errorMessage)
+                }
+            }
+        })
+
         viewModel.getBooks()
     }
 }
